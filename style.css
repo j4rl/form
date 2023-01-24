@@ -1,0 +1,62 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height:100vh;
+    background: rgb(236, 236, 236);
+}
+.logo{
+    width: 100%;
+    height: 100px;
+    background: rgb(146, 88, 44);
+    color:beige;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 4rem;
+    font-weight: bold;
+}
+.form{
+    padding:4rem;
+}
+#frmCitat{
+    padding:1rem;
+    background: rgb(203, 203, 203);
+    border:1px solid rgb(124, 124, 124);
+    border-radius: 10px;
+}
+textarea, input[type='text']{
+    width:100%;
+    padding:.3rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.2rem;
+    border:1px solid rgb(148, 148, 148);
+    border-radius:10px;
+}
+input[type='submit']{
+    width:10rem;
+    border:1px solid #999;
+    border-radius:10px;
+    height:3rem;
+    margin: .5rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.2rem;
+}
+.actualCitat{
+    margin: .4rem 4rem .1rem 4rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.4rem;
+}
+.who{
+    margin: .1rem 4rem .3rem 4rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: .8rem;  
+    font-style: italic;  
+    font-weight: bold;
+    text-align: right;
+    border-bottom: 1px solid #666;
+
+}
