@@ -6,6 +6,16 @@ $pass = "";
 $db = "brad";
 $conn = mysqli_connect($host, $user, $pass, $db);
 
+if(isset($_POST['edt'])){
+    $id = intval($_POST['id']);
+    $in_date=$_POST['date'];
+    $citat=$_POST['txtcitat'];
+    $sagtav=$_POST['txtsagtav'];
+    $sql = "UPDATE tblcitat SET id=$id,citat='$citat',sagtav='$sagtav',in_date='$in_date' WHERE id=$id";
+    $result = mysqli_query($conn, $sql);
+    header("Location: citat.php");
+}
+
 if(isset($_POST['btn'])){
     $citat = $_POST['txtcitat'];
     $av = $_POST['txtsagtav'];
@@ -22,11 +32,33 @@ if(isset($_POST['btn'])){
 <body>
     <section class="logo">Citat</section>
     <section class="form">
+        <?php
+    if(isset($_GET['a'])){
+    if($_GET['a']=='d'){
+        $sql = "DELETE FROM tblcitat WHERE id=" . $_GET['id'];
+        $result = mysqli_query($conn, $sql);  
+    }
+    if($_GET['a']=='e'){
+        $sql="SELECT * FROM tblcitat WHERE id=" . $_GET['id'];
+        $result = mysqli_query($conn, $sql);
+        $raden = mysqli_fetch_assoc($result); ?>
         <form action="citat.php" method="POST" id="frmCitat">
-            <textarea name="txtcitat" rows=5></textarea>
+            <input type="hidden" value="<?=$raden['id']?>" name="id">
+            <input type="hidden" value="<?=$raden['in_date']?>" name="date">
+            <textarea name="txtcitat" rows=3><?=$raden['citat']?></textarea>
+            <input type="text" name="txtsagtav" value="<?=$raden['sagtav']?>">
+            <input type="submit" name="edt" value="Ändra citat">
+        </form>  
+ <?php       
+    }
+
+}else{ ?>
+        <form action="citat.php" method="POST" id="frmCitat">
+            <textarea name="txtcitat" rows=3></textarea>
             <input type="text" placeholder="Vem sade det?" name="txtsagtav">
             <input type="submit" name="btn" value="Lägg in citat">
-        </form>    
+        </form> 
+        <?php } ?>   
     </section>
     <section class="showCitat">
         <?php
@@ -34,7 +66,7 @@ if(isset($_POST['btn'])){
         $result = mysqli_query($conn, $sql);
         while($rad=mysqli_fetch_assoc($result)){ ?>
             <p class="actualCitat"><?=$rad['citat']?></p>
-            <p class="who">- <?=$rad['sagtav']?></p>
+            <p class="who">- <?=$rad['sagtav']?><a href="citat.php?a=d&id=<?=$rad['id']?>" class="a_del">&nbsp;<i class="gg-close-r"></i></a><a href="citat.php?a=e&id=<?=$rad['id']?>" class="a_edit">&nbsp;<i class="gg-keyboard"></i></a></p>
         <?php } ?>
     </section>
 </body>
