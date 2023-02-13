@@ -28,7 +28,7 @@ body{
     border:1px solid rgb(124, 124, 124);
     border-radius: 10px;
 }
-textarea, input[type='text']{
+textarea, input[type='text'], input[type="password"]{
     width:100%;
     padding:.3rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -137,4 +137,15 @@ input[type='submit']{
    }
    .a_edit{
     color:rgb(19, 141, 19);
+   }
+   .formbox{
+    width:50%;
+    margin: 2rem;
+    padding: 3rem;
+    background: rgb(214, 214, 214);
+   }
+   .content{
+    width:80%;
+    font-size: 1.3rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
    }
