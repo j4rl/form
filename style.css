@@ -10,7 +10,7 @@ body{
 .logo{
     width: 100%;
     height: 100px;
-    background: rgb(146, 88, 44);
+    background: rgb(85, 113, 144);
     color:beige;
     display: flex;
     flex-direction: row;
@@ -27,6 +27,16 @@ body{
 }
 .form{
     padding:4rem;
+}
+.login{
+    font-size: 1.2rem;
+    padding-inline: 2rem;
+}
+.login a{
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: normal;
+    color:black;
 }
 #frmLogin{
     display:flex;
@@ -45,9 +55,19 @@ body{
 #btnLogin{
     padding: .2rem;
     border:1px solid transparent;
-    margin-inline: .1rem;
+    margin-inline: auto;
     width:100%;
+    text-align: center;
 }
+#btnLogout{
+    display:flex;
+    width:10rem;
+    padding: .3rem 1rem .3rem 1rem;
+    border:1px solid gray;
+    border-radius: .2rem;
+    background: lightgray;
+}
+
 
 #frmCitat{
     padding:1rem;
