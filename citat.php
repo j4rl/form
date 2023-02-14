@@ -17,9 +17,11 @@ if(isset($_POST['btnLogin'])){
         $rad=mysqli_fetch_assoc($result);
         $_SESSION['name']=$rad['realname'];
         $_SESSION['level']=$rad['level'];
+        $_SESSION['id']=$rad['id'];
     }else{
         $_SESSION['name']="";
         $_SESSION['level']="";
+        $_SESSION['id']="";
     }
 }
 
@@ -35,12 +37,35 @@ function isLevel($level){
     }
 }
 
+function btnEdit($id, $uid){
+    if(isset($_SESSION['level'])){
+        $level=intval($_SESSION['level']);
+    }else{
+        $level=0;
+    }
+    $strOut="";
+    if($level>=100 AND $_SESSION['id']==$uid){
+        $strOut="<a href='citat.php?a=d&id=$id&uid=$uid' class='a_del'>&nbsp;<i class='gg-close-r'></i></a><a href='citat.php?a=e&id=$id&uid=$uid' class='a_edit'>&nbsp;<i class='gg-keyboard'></i></a>";
+    }
+   /* if($level>=500){
+        $strOut="<a href='citat.php?a=e&id=$id&uid=$uid' class='a_edit'>&nbsp;<i class='gg-keyboard'></i></a>";
+    }
+    if($level>=1000){
+        $strOut="<a href='citat.php?a=d&id=$id&uid=$uid' class='a_del'>&nbsp;<i class='gg-close-r'></i></a><a href='citat.php?a=e&id=$id&uid=$uid' class='a_edit'>&nbsp;<i class='gg-keyboard'></i></a>";
+    } */
+    if($level<100){
+        $strOut="";
+    }
+    return $strOut;
+}
+
 if(isset($_POST['edt'])){
     $id = intval($_POST['id']);
     $in_date=$_POST['date'];
     $citat=$_POST['txtcitat'];
     $sagtav=$_POST['txtsagtav'];
-    $sql = "UPDATE tblcitat SET id=$id,citat='$citat',sagtav='$sagtav',in_date='$in_date' WHERE id=$id";
+    $uid=intval($_POST['uid']);
+    $sql = "UPDATE tblcitat SET id=$id,citat='$citat',sagtav='$sagtav',in_date='$in_date', userid=$uid WHERE id=$id";
     $result = mysqli_query($conn, $sql);
     header("Location: citat.php");
 }
@@ -48,7 +73,8 @@ if(isset($_POST['edt'])){
 if(isset($_POST['btn'])){
     $citat = $_POST['txtcitat'];
     $av = $_POST['txtsagtav'];
-    $sql = "INSERT INTO tblcitat (citat, sagtav) VALUES ('$citat', '$av')";
+    $uid=intval($_SESSION['id']);
+    $sql = "INSERT INTO tblcitat (citat, sagtav, userid) VALUES ('$citat', '$av', $uid)";
     $result = mysqli_query($conn, $sql);   
 }
 ?>
@@ -93,6 +119,7 @@ if(isset($_POST['btn'])){
         $result = mysqli_query($conn, $sql);
         $raden = mysqli_fetch_assoc($result); ?>
         <form action="citat.php" method="POST" id="frmCitat">
+            <input type="hidden" value="<?=$raden['userid']?>" name="uid">
             <input type="hidden" value="<?=$raden['id']?>" name="id">
             <input type="hidden" value="<?=$raden['in_date']?>" name="date">
             <textarea name="txtcitat" rows=3><?=$raden['citat']?></textarea>
@@ -117,11 +144,19 @@ if(isset($_POST['btn'])){
     </section>
     <section class="showCitat">
         <?php
+        echo $_SESSION['name']."<br>".$_SESSION['level']."<br>".$_SESSION['id']."<br>";
+        ?>
+        <?php
         $sql = "SELECT * FROM tblcitat ORDER BY in_date DESC";
         $result = mysqli_query($conn, $sql);
+        if(isset($_SESSION['id'])){
+            $user=$_SESSION['id'];
+        }else{
+            $user=0;
+        }
         while($rad=mysqli_fetch_assoc($result)){ ?>
             <p class="actualCitat"><?=$rad['citat']?></p>
-            <p class="who">- <?=$rad['sagtav']?><a href="citat.php?a=d&id=<?=$rad['id']?>" class="a_del">&nbsp;<i class="gg-close-r"></i></a><a href="citat.php?a=e&id=<?=$rad['id']?>" class="a_edit">&nbsp;<i class="gg-keyboard"></i></a></p>
+            <p class="who">- <?=$rad['sagtav']?><?=btnEdit($rad['id'], $user)?></p>
         <?php } ?>
     </section>
 </body>
