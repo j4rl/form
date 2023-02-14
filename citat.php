@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
+
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -8,14 +9,16 @@ $db = "brad";
 $conn = mysqli_connect($host, $user, $pass, $db);
 
 if(isset($_POST['btnLogin'])){
-    $user=$_POST['username'];
-    $pass=md5($_POST['password']);
-    $sql = "SELECT * FROM tbluser WHERE username='$user' AND password='$pass'";
-    $result = mysqli_query($conn, $sql);
+    $user1=$_POST['username'];
+    $pass1=md5($_POST['password']);
+    $sql = "SELECT * FROM tbluser WHERE username='$user1' AND password='$pass1'";
+    $result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
     if(mysqli_num_rows($result)==1){
         $rad=mysqli_fetch_assoc($result);
         $_SESSION['name']=$rad['realname'];
+        echo $_SESSION['name'];
         $_SESSION['level']=$rad['level'];
+        echo $_SESSION['level'];
     }else{
         $_SESSION['name']="";
         $_SESSION['level']="";
@@ -71,8 +74,10 @@ if(isset($_POST['btn'])){
             <input type="password" name="password" id="login_password" title="Enter your password.">
             <input type="submit" name="btnLogin" id="btnLogin" value="Login">
         </form>
-        <?php } ?>
-    </div>    </section>
+        <?php  } ?>
+    </div>  
+
+</section>
     <section class="form">
         <?php
     if(isset($_GET['a'])){
@@ -108,6 +113,7 @@ if(isset($_POST['btn'])){
 } ?>   
     </section>
     <section class="showCitat">
+    <?php if(!isLevel(1)) echo "Oinloggad";?>
         <?php
         $sql = "SELECT * FROM tblcitat ORDER BY in_date DESC";
         $result = mysqli_query($conn, $sql);
