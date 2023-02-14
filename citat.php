@@ -1,10 +1,38 @@
 <!DOCTYPE html>
 <?php
+session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
 $db = "brad";
 $conn = mysqli_connect($host, $user, $pass, $db);
+
+if(isset($_POST['btnLogin'])){
+    $user=$_POST['username'];
+    $pass=md5($_POST['password']);
+    $sql = "SELECT * FROM tbluser WHERE username='$user' AND password='$pass'";
+    $result = mysqli_query($conn, $sql);
+    if(mysqli_num_rows($result)==1){
+        $rad=mysqli_fetch_assoc($result);
+        $_SESSION['name']=$rad['realname'];
+        $_SESSION['level']=$rad['level'];
+    }else{
+        $_SESSION['name']="";
+        $_SESSION['level']="";
+    }
+}
+
+function isLevel($level){
+    if(isset($_SESSION['level'])){
+        if(intval($_SESSION['level'])>=$level){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }
+}
 
 if(isset($_POST['edt'])){
     $id = intval($_POST['id']);
@@ -30,7 +58,21 @@ if(isset($_POST['btn'])){
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <section class="logo">Citat</section>
+    <section class="logo">
+    <div class="logo_text">Citat</div>
+    <div class="login">
+        <?php
+            if(isLevel(1)){
+                echo "Välkommen<br>" . $_SESSION['name'];
+            }else{
+        ?>
+        <form action="citat.php" method="post" id="frmLogin">
+            <input type="text" name="username" id="login_username" placeholder="Username">
+            <input type="password" name="password" id="login_password" title="Enter your password.">
+            <input type="submit" name="btnLogin" id="btnLogin" value="Login">
+        </form>
+        <?php } ?>
+    </div>    </section>
     <section class="form">
         <?php
     if(isset($_GET['a'])){
@@ -52,13 +94,18 @@ if(isset($_POST['btn'])){
  <?php       
     }
 
-}else{ ?>
+}else{ 
+    
+    if(isLevel(1)){
+    ?>
         <form action="citat.php" method="POST" id="frmCitat">
             <textarea name="txtcitat" rows=3></textarea>
             <input type="text" placeholder="Vem sade det?" name="txtsagtav">
             <input type="submit" name="btn" value="Lägg in citat">
         </form> 
-        <?php } ?>   
+        <?php
+    }
+} ?>   
     </section>
     <section class="showCitat">
         <?php
