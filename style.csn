@@ -10,25 +10,72 @@ body{
 .logo{
     width: 100%;
     height: 100px;
-    background: rgb(146, 88, 44);
+    background: rgb(85, 113, 144);
     color:beige;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-size: 4rem;
     font-weight: bold;
 }
+.logo_text{
+    width:100%;
+    flex-grow: 5;
+    padding-inline: 3rem;
+}
 .form{
     padding:4rem;
 }
+.login{
+    font-size: 1.2rem;
+    padding-inline: 2rem;
+}
+.login a{
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: normal;
+    color:black;
+}
+#frmLogin{
+    display:flex;
+    flex-direction: column;
+    width:20rem;
+    padding: .2rem 2rem .2rem 2rem;
+}
+#login_username, #login_password{
+    width:100%;
+    font-size: .9rem;
+    padding: .1rem;
+    margin: .1rem;
+    border-radius: .1rem;
+    border:1px solid transparent;
+}
+#btnLogin{
+    padding: .2rem;
+    border:1px solid transparent;
+    margin-inline: auto;
+    width:100%;
+    text-align: center;
+}
+#btnLogout{
+    display:flex;
+    width:10rem;
+    padding: .3rem 1rem .3rem 1rem;
+    border:1px solid gray;
+    border-radius: .2rem;
+    background: lightgray;
+}
+
+
 #frmCitat{
     padding:1rem;
     background: rgb(203, 203, 203);
     border:1px solid rgb(124, 124, 124);
     border-radius: 10px;
 }
-textarea, input[type='text']{
+.form textarea, .form input[type='text'], .form input[type="password"]{
     width:100%;
     padding:.3rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -36,7 +83,7 @@ textarea, input[type='text']{
     border:1px solid rgb(148, 148, 148);
     border-radius:10px;
 }
-input[type='submit']{
+.form input[type='submit']{
     width:10rem;
     border:1px solid #999;
     border-radius:10px;
@@ -137,4 +184,15 @@ input[type='submit']{
    }
    .a_edit{
     color:rgb(19, 141, 19);
+   }
+   .formbox{
+    width:50%;
+    margin: 2rem;
+    padding: 3rem;
+    background: rgb(214, 214, 214);
+   }
+   .content{
+    width:80%;
+    font-size: 1.3rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
    }

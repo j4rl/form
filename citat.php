@@ -144,7 +144,7 @@ if(isset($_POST['btn'])){
     </section>
     <section class="showCitat">
         <?php
-        echo $_SESSION['name']."<br>".$_SESSION['level']."<br>".$_SESSION['id']."<br>";
+        //echo $_SESSION['name']."<br>".$_SESSION['level']."<br>".$_SESSION['id']."<br>";
         ?>
         <?php
         $sql = "SELECT * FROM tblcitat ORDER BY in_date DESC";
