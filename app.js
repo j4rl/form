@@ -1,1 +1,1 @@
-<script>alert("Thursday");</script> 
+<script>alert("Friday");</script> 
